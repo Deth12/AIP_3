@@ -68,11 +68,11 @@ int CALLBACK wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR szCmdL
 	// структура, хрянящая время (ч, м, с)
 	SYSTEMTIME st;
 	// заполнение структуры
-	GetSystemTime(&st); 
+	GetLocalTime(&st); 
 	// установка углов в необходимое положение
-	secAngle -= st.wSecond * 6;
-	minAngle -= st.wMinute * 6 + st.wSecond * 0.1;
-	hourAngle -= st.wHour * 15 + st.wMinute * 0.1;
+	secAngle -= st.wSecond * 6.0f;
+	minAngle -= st.wMinute * 6.0f + st.wSecond * 0.1f;
+	hourAngle -= st.wHour * 15.0f + st.wMinute * 0.125f;
 	SetTimer(hWnd, 1, 1000, NULL);
 	// показ окна
 	ShowWindow(hWnd, nCmdShow);
@@ -161,6 +161,8 @@ void DrawGraph(HWND hWnd, HDC hDC, int scale)
 
 	HPEN Pen = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));
 	HPEN Pen2 = CreatePen(PS_SOLID, 3, RGB(255, 255, 0));
+	HPEN Pen3 = CreatePen(PS_SOLID, 3, RGB(0, 255, 0));
+
 
 	hDC = GetDC(hWnd);
 	SelectObject(hDC, Pen);
@@ -176,6 +178,14 @@ void DrawGraph(HWND hWnd, HDC hDC, int scale)
 	{
 		float cX = scale * x + 280.0f;
 		float cY = -scale * cos(x) + 160.0f;
+		MoveTo(hDC, (int)cX, (int)cY);
+		LineTo(hDC, (int)cX, (int)cY);
+	}
+	SelectObject(hDC, Pen3);
+	for (float x = 0; x <= 8.00f; x += 0.001f)
+	{
+		float cX = scale * x + 282.0f;
+		float cY = -scale * log(x) + 160.0f;
 		MoveTo(hDC, (int)cX, (int)cY);
 		LineTo(hDC, (int)cX, (int)cY);
 	}
@@ -352,7 +362,7 @@ void DrawClock(HWND hWnd, HDC hDC)
 		UpdateWindow(hWnd);
 		hDC = GetDC(hWnd);
 		SetBkMode(hDC, TRANSPARENT);
-		TextOut(hDC, 20, 10, std::to_wstring((int)hourAngle).c_str(), 4);
+		// TextOut(hDC, 20, 10, std::to_wstring((int)hourAngle).c_str(), 4);
 
 		Ellipse(hDC, 40, 40, 220, 220);
 		HPEN PenS = CreatePen(PS_SOLID, 2, RGB(255, 100, 100));
