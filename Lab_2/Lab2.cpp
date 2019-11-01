@@ -18,7 +18,6 @@ static HWND buttons[5];
 
 float secAngle = 180, minAngle = 180, hourAngle = 180;
 bool isTimerActive;
-bool clockIsPainted;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
