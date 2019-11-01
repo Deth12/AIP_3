@@ -4,7 +4,6 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 #include <Windows.h>
 #include <cmath>
-#include <vector>
 #include <string>
 #include <strstream>
 #include <sstream>
@@ -92,7 +91,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	const wchar_t description[] = L"1. Draw 8 lines\n2. Draw yellow circle and blue ellipse\n3. Draw graph (y = sin(x))\n4. Fonts\n5. Show timer";
 	HDC hDC = NULL;
-	std::vector<int>allowedScales = {5,10,20,40};
 	int scale = 20;
 	switch (uMsg)
 	{
